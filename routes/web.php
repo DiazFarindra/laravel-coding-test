@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PondController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('ponds', PondController::class);
+    Route::resource('packages', PackageController::class);
+    Route::resource('logs', LogController::class);
+});
+
+require __DIR__.'/auth.php';
