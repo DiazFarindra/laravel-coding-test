@@ -37,7 +37,8 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
-            "@php artisan migrate:fresh --seed"
+            "touch database/database.sqlite",
+            "@php artisan migrate --seed"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
@@ -50,8 +51,6 @@
         ],
         "post-install-cmd": [
             "@php artisan clear-compiled",
-            "@php artisan key:generate",
-            "@php artisan migrate:fresh --seed",
             "chmod -R 775 public/",
             "chmod -R 777 public/"
         ]
