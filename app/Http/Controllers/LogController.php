@@ -103,10 +103,10 @@ class LogController extends Controller
             $from_package->total_unit
         );
 
-        $from_package->total_unit = $total_unit;
+        $from_package->total_unit = $request->total_unit;
         $from_package->save();
 
-        $to_package->total_unit = $request->total_unit;
+        $to_package->total_unit = $total_unit;
         $to_package->save();
 
         $log->update($request->validated());
