@@ -19,8 +19,7 @@ class LogFactory extends Factory
         return [
             'log_date' => $this->faker->dateTimeBetween('-1 years', 'now'),
             'package_id' => Package::factory(),
-            'from_pond' => Pond::factory(),
-            'to_pond' => Pond::factory(),
+            'to_package_id' => Package::factory(),
             'total_unit' => $this->faker->randomNumber(3),
         ];
     }

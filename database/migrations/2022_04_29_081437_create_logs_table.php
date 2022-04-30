@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('log_date');
             $table->foreignId('package_id')->constrained()->cascadeOnDelete();
-            $table->string('from_pond');
-            $table->string('to_pond');
+            $table->string('to_package_id');
             $table->integer('total_unit');
             $table->timestamps();
         });

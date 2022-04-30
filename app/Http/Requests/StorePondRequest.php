@@ -24,7 +24,7 @@ class StorePondRequest extends FormRequest
     public function rules()
     {
         return [
-            'pond_code' => ['required', 'string', 'max:255', 'unique:ponds'],
+            'pond_code' => ['required', 'string', 'max:5', 'unique:ponds'],
         ];
     }
 }

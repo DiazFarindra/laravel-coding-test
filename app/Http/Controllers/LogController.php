@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLogRequest;
 use App\Http\Requests\UpdateLogRequest;
 use App\Models\Log;
 use App\Models\Package;
+use App\Models\Pond;
 
 class LogController extends Controller
 {
@@ -26,11 +27,11 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Package $package)
     {
         $ponds = Pond::with('packages')->get();
 
-        return view('logs.create', $ponds);
+        return view('logs.create', compact('ponds', 'package'));
     }
 
     /**
@@ -41,6 +42,8 @@ class LogController extends Controller
      */
     public function store(StoreLogRequest $request)
     {
+        $data = $request->validated();
+
         $from_package = Package::find($request->package_id);
         $from_package->total_unit = $from_package->total_unit - $request->total_unit;
         $from_package->save();
@@ -49,14 +52,9 @@ class LogController extends Controller
         $to_package->total_unit = $to_package->total_unit + $request->total_unit;
         $to_package->save();
 
-        $request->merge([
-            'from_pond' => $from_package->pond->id,
-            'to_pond' => $to_package->pond->id,
-        ]);
+        Log::create($data);
 
-        Log::create($request->validated());
-
-        return redirect()->route('logs.index')->with('success', 'Log created successfully.');
+        return redirect()->route('packages.index')->with('success', 'Log created successfully.');
     }
 
     /**
@@ -78,7 +76,13 @@ class LogController extends Controller
      */
     public function edit(Log $log)
     {
-        return view('logs.edit', compact('log'));
+        $ponds = Pond::with('packages')->get();
+
+        $to_package = Package::find($log->to_package_id);
+
+        return view('logs.edit', compact(
+            'log', 'ponds', 'to_package'
+        ));
     }
 
     /**
@@ -107,7 +111,7 @@ class LogController extends Controller
 
         $log->update($request->validated());
 
-        return redirect()->route('logs.index')->with('success', 'Log updated successfully.');
+        return redirect()->route('packages.index')->with('success', 'Log updated successfully.');
     }
 
     /**

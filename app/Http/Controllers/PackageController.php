@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
 use App\Models\Package;
+use App\Models\Pond;
 
 class PackageController extends Controller
 {
@@ -15,7 +16,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::with('logs')->get();
+        $packages = Package::with('pond', 'logs')->get();
 
         return view('packages.index', compact('packages'));
     }
@@ -27,7 +28,9 @@ class PackageController extends Controller
      */
     public function create()
     {
-        return view('packages.create');
+        $ponds = Pond::get();
+
+        return view('packages.create', compact('ponds'));
     }
 
     /**
@@ -62,7 +65,9 @@ class PackageController extends Controller
      */
     public function edit(Package $package)
     {
-        return view('packages.edit', compact('package'));
+        $ponds = Pond::get();
+
+        return view('packages.edit', compact('package', 'ponds'));
     }
 
     /**

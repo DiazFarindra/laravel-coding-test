@@ -20,4 +20,14 @@ class Pond extends Model
     {
         return $this->hasManyThrough(Log::class, Package::class);
     }
+
+    public function createdAt()
+    {
+        return $this->created_at->format('d F Y H:i');
+    }
+
+    public function updatedAt()
+    {
+        return $this->updated_at->format('d F Y H:i');
+    }
 }

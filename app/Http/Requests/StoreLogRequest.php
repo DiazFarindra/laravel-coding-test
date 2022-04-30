@@ -24,11 +24,9 @@ class StoreLogRequest extends FormRequest
     public function rules()
     {
         return [
-            'log_date' => ['required', 'date', 'date_format:Y-m-d H:i:s'],
+            'log_date' => ['required', 'date'],
             'package_id' => ['required', 'integer', 'exists:packages,id'],
             'to_package_id' => ['required', 'integer', 'exists:packages,id'],
-            'from_pond' => ['string', 'exists:ponds,id'],
-            'to_pond' => ['string', 'exists:ponds,id'],
             'total_unit' => ['required', 'integer'],
         ];
     }

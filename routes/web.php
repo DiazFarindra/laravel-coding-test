@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\LogController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PondController;
+use App\Http\Controllers\SpellCheckerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +26,16 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // count spell checker
+    Route::get('/spell-counter', [SpellCheckerController::class, 'index'])->name('spell-checker.index');
+    Route::post('/spell-counter', [SpellCheckerController::class, 'store']);
+
+    // crud
     Route::resource('ponds', PondController::class);
     Route::resource('packages', PackageController::class);
-    Route::resource('logs', LogController::class);
+
+    Route::get('/logs/create/{package}', [LogController::class, 'create'])->name('logs.create');
+    Route::resource('logs', LogController::class)->except(['create']);
 });
 
 require __DIR__.'/auth.php';

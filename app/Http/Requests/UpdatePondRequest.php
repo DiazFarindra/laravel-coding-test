@@ -25,7 +25,7 @@ class UpdatePondRequest extends FormRequest
     public function rules()
     {
         return [
-            'pond_code' => ['required', 'string', 'max:255', Rule::unique('ponds')->ignore($this->pond)],
+            'pond_code' => ['required', 'string', 'max:5', Rule::unique('ponds')->ignore($this->pond)],
         ];
     }
 }
