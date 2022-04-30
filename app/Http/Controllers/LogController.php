@@ -31,6 +31,10 @@ class LogController extends Controller
     {
         $ponds = Pond::with('packages')->get();
 
+        if ($package->total_unit == 0) {
+            return redirect()->back()->with('error', 'Package is empty');
+        }
+
         return view('logs.create', compact('ponds', 'package'));
     }
 
