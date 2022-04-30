@@ -48,8 +48,7 @@
         ],
         "post-install-cmd": [
             "cp .env.example .env",
-            "php artisan key:generate",
-            "php artisan migrate --seed",
+            "@php artisan migrate --seed",
             "chmod -R 777 public/"
         ]
     },
