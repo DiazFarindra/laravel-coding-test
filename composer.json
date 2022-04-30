@@ -35,7 +35,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan migrate:fresh --seed"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
@@ -44,12 +45,14 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php artisan migrate:fresh --seed"
+            "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [
             "@php artisan clear-compiled",
-            "chmod -R 775 public/"
+            "@php artisan key:generate",
+            "@php artisan migrate:fresh --seed",
+            "chmod -R 775 public/",
+            "chmod -R 777 public/"
         ]
     },
     "extra": {
