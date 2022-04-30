@@ -37,7 +37,6 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
-            "touch database/database.sqlite",
             "@php artisan migrate --seed"
         ],
         "post-update-cmd": [
